@@ -1,6 +1,6 @@
 # SQL HW 1
 
-``
+```
  CREATE TABLE employees(
   id serial PRIMARY KEY,
   employee_name varchar(50) not null
@@ -240,4 +240,4 @@ values (7,2),
        (40,18),
        (32,19),
        (25,20);
- ``
+ ```
