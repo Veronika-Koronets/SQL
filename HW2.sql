@@ -1,14 +1,3 @@
-select * from employees;
---id, employee_name 70 чел
-select * from salary;
---id, monthly_salary 32 ЗП
-select * from employee_salary order by employee_id;
---id, employee_id, salary_id
-select * from roles;
---id, role_name
-select * from roles_employee;
---id, employee_id, role_id
-
 --1. Вывести всех работников чьи зарплаты есть в базе, вместе с зарплатами.
 select employee_name, monthly_salary  from employees 
 join employee_salary on employees.id = employee_salary.employee_id 
@@ -21,21 +10,17 @@ join salary on employee_salary.salary_id= salary.id
 where monthly_salary < 2000;
 
  --3. Вывести все зарплатные позиции, но работник по ним не назначен. (ЗП есть, но не понятно кто её получает.)
-
 select employee_name, monthly_salary  from employees 
 right join employee_salary on employees.id = employee_salary.employee_id 
 join salary on employee_salary.salary_id= salary.id 
 where employee_name is null;
-
 
 --4. Вывести все зарплатные позиции  меньше 2000 но работник по ним не назначен. (ЗП есть, но не понятно кто её получает.)
 select employee_name, monthly_salary  from employees 
 right join employee_salary on employees.id = employee_salary.employee_id 
 join salary on employee_salary.salary_id= salary.id 
 where employee_name is null and monthly_salary <2000;
---??-- 5. Найти всех работников кому не начислена ЗП.
---70 всего, 30 получают ЗП и 40 без ЗП
---left
+--5. Найти всех работников кому не начислена ЗП.
 select employee_name, monthly_salary from employees 
  left join employee_salary on employees.id = employee_salary.employee_id 
 left  join salary on employee_salary.salary_id =salary.id 
@@ -83,6 +68,7 @@ join salary on employee_salary.salary_id = salary.id
 join roles_employee on employees.id = roles_employee.role_id
 join roles on roles_employee.role_id=roles.id
 where role_name like '%Junior%';
+
 -- 13. Вывести имена и зарплаты Middle специалистов
 select employee_name, monthly_salary, role_name from employees 
 join employee_salary on employees.id=employee_salary.employee_id 
@@ -98,8 +84,8 @@ join salary on employee_salary.salary_id =salary.id
 join roles_employee on employees.id=roles_employee.role_id 
 join roles on roles_employee.role_id = roles.id 
 where role_name like '%Senior%';
+
 -- 15. Вывести зарплаты Java разработчиков
---нет общей таблицы, берем employee, но не выводим
 select monthly_salary, role_name from employees 
 join employee_salary on employees.id = employee_salary.employee_id 
 join salary on employee_salary.salary_id = salary.id 
@@ -180,7 +166,6 @@ join salary on employee_salary.salary_id = salary.id
 where role_name like '%QA%'
 
 -- 25. Вывести количество QA инженеров
---10 QA, 41 всего
 select count(*) from employees
 join roles_employee on employees.id = roles_employee.role_id
 join roles on roles_employee.role_id=roles.id
@@ -207,7 +192,6 @@ join roles on roles_employee.role_id = roles.id
 where role_name like '%developer%';
 
 -- 29. Вывести имена, должности и ЗП всех специалистов по возрастанию
---почему 36, если д.б.41
 select employee_name, role_name, monthly_salary from employees
 join employee_salary on employees.id = employee_salary.employee_id 
 join salary on employee_salary.salary_id = salary.id 
@@ -232,8 +216,8 @@ join roles_employee on employees.id = roles_employee.role_id
 join roles on roles_employee.role_id = roles.id
 where monthly_salary <2300
 order by monthly_salary  ;
--- 32. Вывести имена, должности и ЗП всех специалистов по возрастанию у специалистов у которых ЗП равна 1100, 
---1500, 2000
+
+-- 32. Вывести имена, должности и ЗП всех специалистов по возрастанию у специалистов у которых ЗП равна 1100, 1500, 2000
 select employee_name, role_name, monthly_salary from employees
 join employee_salary on employees.id = employee_salary.employee_id 
 join salary on employee_salary.salary_id = salary.id 
