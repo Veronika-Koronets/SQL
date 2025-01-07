@@ -1,0 +1,22 @@
+--VIEW. таблицы из group by, any, all
+--view не отличается от обычной таблицы, только в редактировании. удалять и селектить так же
+--public, tables, view это прсмотерть вьюшки
+--вьюшку проще пересоздать, чем изменить, поэтому create or replace. будет автоматически создаваться заново при изменениях
+
+create or replace view phones_models_prices as
+select apl.model as a_model,
+       apl.ram as a_ram,
+       apl.price as a_price,
+       sms.price as s_price,
+       sms.ram as s_ram,
+       sms.model as s_model
+from phones_apple as apl
+inner join phones_samsung as sms
+on apl.price = sms.price
+
+select * from phones_models_prices 
+where a_ram >4;
+
+--удалить представление
+drop view if exists phones_models_prices
+

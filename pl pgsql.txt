@@ -1,0 +1,68 @@
+--PL PGSQL
+--поскольку СУБД это как сервер с БД. как сервер он может вычислять
+--часто в финансовых проектах программирование на SQL
+--любая процедура в SQL хар-ся блоком. начинается с do $$ declare(обьявили с чем работаем)
+-- := это присвоение
+--слева под параметрами "консоль сообщений"
+do $$
+declare
+    n1 varchar (10):= 'Hello';
+    n2 varchar (10);
+begin
+	n2:= 'QA!';
+	raise info 'Message. % ', n1;
+end;
+$$
+
+--RAISE команда для вывода сообщений и вызова ошибок (с инета)
+
+create function sqr1(in a int, out result_f int)
+as $$
+begin
+	result_f:= a*a;
+end;
+$$ language plpgsql immutable;
+--указать язык на котором работаем
+--теперь вызвать функцию
+--даем цифру на вход
+select sqr1(4);
+
+create function sqr2(inout a int)
+as $$
+begin
+	a:= a*a;
+end;
+$$ language plpgsql immutable;
+--указать язык на котором работаем
+--теперь вызвать функцию
+--даем цифру на вход
+select sqr1(4), sqr2(5);
+
+
+--if, ветвление
+--через фунцию
+--закрыть IF
+create function check_items(in item_1 int, out result_f int)
+as $$
+begin
+	if item_1>5 then
+		result_f:= 100;
+	else
+	   result_f:= 200;
+	end if;
+end;
+$$ language plpgsql immutable;
+
+select check_items(2)
+
+--не через фунцию
+--raise info чтобы видеть результат
+do $$
+begin
+	if 10>5 then
+		raise info '10>5';
+	else
+	   raise info 'Check ur items';
+	  end if;
+end;
+$$;
